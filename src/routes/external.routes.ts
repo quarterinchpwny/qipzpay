@@ -6,7 +6,9 @@ import dayjs from "dayjs";
 
 const router = Router();
 
-router.get("/daily", async (req, res) => {
+router.get("/daily-price", async (req, res) => {
+  // check currently stored
+
   const currentDate = dayjs();
   const currentURL = getPdfURL();
 
