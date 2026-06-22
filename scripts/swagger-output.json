@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "My API",
+    "title": "Qippay",
     "description": "Description",
     "version": "1.0.0"
   },
@@ -11,12 +11,27 @@
     "http"
   ],
   "paths": {
-    "/external/daily-price": {
+    "/external/price-breakdown": {
       "get": {
-        "description": "Use for fetching daily prices",
+        "description": "",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "dateRange",
+            "in": "query",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"

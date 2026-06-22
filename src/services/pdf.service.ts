@@ -2,7 +2,7 @@ import axios from "axios";
 import { PDFParse } from "pdf-parse";
 
 interface Item {
-  raw: string;
+  itemName: string;
   price: number | null;
 }
 
@@ -180,7 +180,7 @@ export async function parsePDF(url: string): Promise<CurrentCategory[]> {
 
     const commodityPart = line.replace(priceRegex, "").trim();
 
-    currentCategory?.items.push({ raw: commodityPart, price });
+    currentCategory?.items.push({ itemName: commodityPart, price });
   }
 
   return results.filter((r) => r.items.length > 0);

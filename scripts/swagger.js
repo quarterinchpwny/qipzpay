@@ -2,9 +2,10 @@ import swaggerAutogen from "swagger-autogen";
 
 const doc = {
   info: {
-    title: "My API",
+    title: "Qippay",
     description: "Description",
   },
+  basePath:'/api',
   host: "localhost:3000",
 };
 

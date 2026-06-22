@@ -6,29 +6,40 @@ import dayjs from "dayjs";
 
 const router = Router();
 
-router.get("/daily-price", async (req, res) => {
-  const currentDate = dayjs();
-  const currentURL = getPdfURL();
-
+router.get("/price-breakdown", async (req, res) => {
   try {
-    const check = await checkPdfExists(currentURL);
+    const type = typeof req.query.type === "string" ? req.query.type : "day";
+    const dateRange =
+      typeof req.query.dateRange === "string" ? req.query.dateRange : "";
+    const currentDate = dayjs();
+    const currentURL = getPdfURL(type, dateRange);
 
-    if (check) {
-      const pdfContents = await parsePDF(currentURL);
+    const exists = await checkPdfExists(currentURL);
 
-      return res.json(
-        formatResponse(true, {
-          requestTime: req.requestTime,
-          date: currentDate.format("MMMM-D-YYYY"),
-          data: pdfContents,
-        }),
-      );
+    if (!exists) {
+      return res
+        .status(404)
+        .json(
+          formatResponse(
+            false,
+            null,
+            `Data not available at the moment ref(${currentURL})`,
+          ),
+        );
     }
 
-    return res.json(
-      formatResponse(false, null, "Data not available at the moment"),
+    const pdfContents = await parsePDF(currentURL);
+
+    return res.status(200).json(
+      formatResponse(true, {
+        requestTime: req.requestTime,
+        date: currentDate.format("YYYY-MM-DD"),
+        data: pdfContents,
+      }),
     );
-  } catch (e) {
+  } catch (error) {
+    console.error("daily-price error:", error);
+
     return res
       .status(500)
       .json(formatResponse(false, null, "Something went wrong"));
