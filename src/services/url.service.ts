@@ -16,8 +16,6 @@ export function getPdfURL(type: string = "day", dateRange: string): string {
     if (!dateRange) return "";
 
     formattedURL = `${baseURL}/${currentYear}/${currentMonth}/Weekly-Average-Prices-${dateYesterday.format("MMMM")}-${dateRange}-${currentYear}.pdf`;
-    // formattedURL =
-    //   "https://www.da.gov.ph/wp-content/uploads/2026/06/Weekly-Average-Prices-June-15-20-2026.pdf";
   }
 
   return formattedURL;
